@@ -19,13 +19,13 @@ struct ContentView: View {
 
 /*
  THis class is responsible for requesting permission to access user device camera and begin a AVCaptureSession.
- The AVCaptureSession object is used to calculate the luminosity of what the camera is pointing at.
  */
 class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     @Published var luminosityReading : Double = 0.0
-    var session : AVCaptureSession!
     
+    var session : AVCaptureSession!
+        
     override init() {
         super.init()
         authorizeCapture()
@@ -63,6 +63,8 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
      */
     func beginCapture() {
         
+        print("beginCapture entered")
+        
         func bestDevice() -> AVCaptureDevice {
             let devices = discoverySession.devices
             guard !devices.isEmpty else { fatalError("Missing capture devices.")}
@@ -70,13 +72,16 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
             return devices.first(where: { device in device.position == AVCaptureDevice.Position.back })!
         }
         
+        
         session = AVCaptureSession()
         session.beginConfiguration()
         
         let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes:
                                                                     [.builtInTrueDepthCamera, .builtInDualCamera, .builtInWideAngleCamera],
                                                                 mediaType: .video, position: .back)
+        
         let videoDevice = bestDevice()
+        print("Device: \(videoDevice)")
         guard
             let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice),
             session.canAddInput(videoDeviceInput)
@@ -92,25 +97,18 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
             print("Error creating video output")
             return
         }
-        
-        session.sessionPreset = .high
+        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "VideoQueue"))
         session.addOutput(videoOutput)
         
-        let queue = DispatchQueue(label: "VideoFrameQueue")
-        let delegate = self
-        
-        videoOutput.setSampleBufferDelegate(delegate, queue: queue)
-        
+        session.sessionPreset = .medium
         session.commitConfiguration()
         session.startRunning()
     }
-
-    /*
-     From: https://stackoverflow.com/questions/41921326/how-to-get-light-value-from-avfoundation/46842115#46842115
-     */
     
-    func captureOutput(_ output: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-        
+    
+    // From: https://stackoverflow.com/questions/41921326/how-to-get-light-value-from-avfoundation/46842115#46842115
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+
         print("captureOutput entered")  // never printed
         
         // Retrieving EXIF data of camara frame buffer
