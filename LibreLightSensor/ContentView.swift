@@ -128,9 +128,3 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
     }
 }
 
-
-
-
-
-
-
