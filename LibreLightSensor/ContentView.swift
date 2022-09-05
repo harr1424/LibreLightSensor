@@ -12,7 +12,7 @@ struct ContentView: View {
     @StateObject var videoStream = VideoStream()
     
     var body: some View {
-        Text("\(videoStream.luminosityReading)")
+        Text(String(format: "%.2f Lux", videoStream.luminosityReading))
             .padding()
     }
 }
@@ -98,17 +98,21 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
         
         let queue = DispatchQueue(label: "VideoFrameQueue")
         let delegate = self
-
+        
         videoOutput.setSampleBufferDelegate(delegate, queue: queue)
         
         session.commitConfiguration()
         session.startRunning()
     }
-    
+
     /*
      From: https://stackoverflow.com/questions/41921326/how-to-get-light-value-from-avfoundation/46842115#46842115
      */
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    
+    func captureOutput(_ output: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
+        
+        print("captureOutput entered")  // never printed
+        
         // Retrieving EXIF data of camara frame buffer
         let rawMetadata = CMCopyDictionaryOfAttachments(allocator: nil, target: sampleBuffer, attachmentMode: CMAttachmentMode(kCMAttachmentMode_ShouldPropagate))
         let metadata = CFDictionaryCreateMutableCopy(nil, 0, rawMetadata) as NSMutableDictionary
@@ -125,6 +129,7 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
         luminosityReading = luminosity
     }
 }
+
 
 
 
