@@ -18,7 +18,7 @@ struct ContentView: View {
 }
 
 /*
- THis class is responsible for requesting permission to access user device camera and begin a AVCaptureSession.
+ This class is responsible for requesting permission to access user device camera and begin a AVCaptureSession.
  */
 class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
@@ -81,7 +81,10 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
                                                                 mediaType: .video, position: .back)
         
         let videoDevice = bestDevice()
+                
         print("Device: \(videoDevice)")
+        
+        
         guard
             let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice),
             session.canAddInput(videoDeviceInput)
@@ -89,6 +92,7 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
             print("Camera selection failed")
             return
         }
+        session.addInput(videoDeviceInput)
         
         let videoOutput = AVCaptureVideoDataOutput()
         guard
