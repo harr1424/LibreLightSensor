@@ -13,6 +13,7 @@
 		CE5C5F5A28C40E66004C2033 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE5C5F5928C40E66004C2033 /* Preview Assets.xcassets */; };
 		CE65B61C28C93DE90091DD63 /* VideoStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65B61B28C93DE90091DD63 /* VideoStream.swift */; };
 		CE65B61E28C93E330091DD63 /* VideoPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65B61D28C93E330091DD63 /* VideoPreview.swift */; };
+		CE65B62028C967870091DD63 /* LuxReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65B61F28C967870091DD63 /* LuxReference.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		CE5C5F5928C40E66004C2033 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CE65B61B28C93DE90091DD63 /* VideoStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStream.swift; sourceTree = "<group>"; };
 		CE65B61D28C93E330091DD63 /* VideoPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreview.swift; sourceTree = "<group>"; };
+		CE65B61F28C967870091DD63 /* LuxReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuxReference.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				CE5C5F5628C40E66004C2033 /* Assets.xcassets */,
 				CE5C5F5828C40E66004C2033 /* Preview Content */,
 				CE65B61D28C93E330091DD63 /* VideoPreview.swift */,
+				CE65B61F28C967870091DD63 /* LuxReference.swift */,
 			);
 			path = LibreLightSensor;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 				CE5C5F5328C40E65004C2033 /* LibreLightSensorApp.swift in Sources */,
 				CE65B61E28C93E330091DD63 /* VideoPreview.swift in Sources */,
 				CE65B61C28C93DE90091DD63 /* VideoStream.swift in Sources */,
+				CE65B62028C967870091DD63 /* LuxReference.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
