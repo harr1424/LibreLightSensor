@@ -83,7 +83,7 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "CaptureOutputQueue"))
         session.addOutput(videoOutput)
         
-        session.sessionPreset = .low
+        session.sessionPreset = .medium
         session.commitConfiguration()
         session.startRunning()
     }
