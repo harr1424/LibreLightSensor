@@ -18,17 +18,26 @@ struct ContentView: View {
                 .multilineTextAlignment(.center)
         } else {
             
-            VStack {
-                if (videoStream.session != nil) {
-                    VideoPreviewHolder(runningSession: videoStream.session)
-                        .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 0, idealHeight: .infinity, maxHeight: .infinity, alignment: .center)
-                } else {
-                    ProgressView()
+            NavigationView {
+                VStack {
+                    if (videoStream.session != nil) {
+                        VideoPreviewHolder(runningSession: videoStream.session)
+                            .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 0, idealHeight: .infinity, maxHeight: .infinity, alignment: .center)
+                    } else {
+                        ProgressView()
+                    }
+                    Text(String(format: "%.0f  Lux", videoStream.luminosityReading))
+                        .font(.system(size: 50))
+                        .padding()
+                        .toolbar {
+                            ToolbarItem(id: "ReferenceButton", placement: .bottomBar) {
+                                NavigationLink(destination: ReferenceView()) {
+                                    Image(systemName: "info.circle")
+                                }
+                            }
+                        }
                 }
             }
-            Text(String(format: "%.0f  Lux", videoStream.luminosityReading))
-                .font(.system(size: 50))
-                .padding()
         }
     }
 }

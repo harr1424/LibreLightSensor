@@ -33,12 +33,16 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
     func authorizeCapture()  {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized: // The user has previously granted access to the camera.
-            cameraAccess = true
+            DispatchQueue.main.async {
+                self.cameraAccess = true
+            }
             beginCapture()
         case .notDetermined: // The user has not yet been asked for camera access.
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
-                    self.cameraAccess = true
+                    DispatchQueue.main.async {
+                        self.cameraAccess = true
+                    }
                     self.beginCapture()
                 }
             }

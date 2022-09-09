@@ -13,6 +13,12 @@ struct LuxReference: Identifiable {
     let id = UUID()
 }
 
+struct compactLuxReference: Identifiable {
+    // TODO delete this
+    let reference: String
+    let id = UUID()
+}
+
 let references = [
     LuxReference(reference: "Overcast night sky, no moon", value: "0.0001"),
     LuxReference(reference: "Full moon on a clear night", value: "0.3"),
@@ -28,12 +34,39 @@ let references = [
     LuxReference(reference: "Direct sunlight", value: "32,000 - 100,000")
 ]
 
+let compactReferences = [
+    // TODO delete this
+    compactLuxReference(reference: "Overcast night sky, no moon: 0.0001"),
+    compactLuxReference(reference: "Full moon on a clear night: 0.3"),
+    compactLuxReference(reference: "Horizon at dusk with a clear sky: 3.4"),
+    compactLuxReference(reference: "Family living room lights (1998): 50"),
+    compactLuxReference(reference: "Public restroom: 80"),
+    compactLuxReference(reference: "Very dark overcast day: 100"),
+    compactLuxReference(reference: "Train station platform: 150"),
+    compactLuxReference(reference: "Sunrise or sunset on a clear day: 400"),
+    compactLuxReference(reference: "Office lighting: 500"),
+    compactLuxReference(reference: "Overcast day: 1000"),
+    compactLuxReference(reference: "Full daylight: 10,000 - 25,000"),
+    compactLuxReference(reference: "Direct sunlight: 32,000 - 100,000")
+]
+
 
 struct ReferenceView: View {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
     var body: some View {
-        Table(references) {
-            TableColumn("Reference", value: \.reference)
-            TableColumn("Measurement", value: \.value)
+        
+        if horizontalSizeClass == .compact{
+            
+            // TODO use an HStack to display two lists instead
+            Table(compactReferences) {
+                TableColumn("Sample Values", value: \.reference)
+            }
+        } else {
+            Table(references) {
+                TableColumn("Reference", value: \.reference)
+                TableColumn("Value", value: \.value)
+            }
         }
     }
 }
