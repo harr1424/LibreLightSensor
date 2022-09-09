@@ -61,15 +61,17 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
         session = AVCaptureSession()
         session.beginConfiguration()
         
-        let videoDevice = AVCaptureDevice.default(for: .video)
-        guard
-            let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice!),
-            session.canAddInput(videoDeviceInput)
-        else {
-            print("Camera selection failed")
+        guard let videoDevice = AVCaptureDevice.default(for: .video) else {return}
+        
+        do {
+            let videoInput = try AVCaptureDeviceInput(device: videoDevice)
+            if session.canAddInput(videoInput) {
+                session.addInput(videoInput)
+            }
+        } catch {
+            print("Camera selection failed: \(error)")
             return
         }
-        session.addInput(videoDeviceInput)
         
         let videoOutput = AVCaptureVideoDataOutput()
         guard
@@ -81,7 +83,7 @@ class VideoStream: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBuf
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "CaptureOutputQueue"))
         session.addOutput(videoOutput)
         
-        session.sessionPreset = .medium
+        session.sessionPreset = .low
         session.commitConfiguration()
         session.startRunning()
     }
