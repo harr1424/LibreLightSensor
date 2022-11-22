@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct LuxReference: Identifiable {
     let reference: String
@@ -30,6 +31,7 @@ let references = [
 
 struct ReferenceView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.requestReview) private var requestReview
     
     var body: some View {
         
@@ -38,11 +40,19 @@ struct ReferenceView: View {
                 List(references) {
                     Text(String("\($0.reference):\t \($0.value) Lux"))
                 }
+            }.onAppear{
+                DispatchQueue.main.async {
+                    requestReview()
+                }
             }
         } else {
             Table(references) {
                 TableColumn("Reference", value: \.reference)
                 TableColumn("Value", value: \.value)
+            }.onAppear{
+                DispatchQueue.main.async {
+                    requestReview()
+                }
             }
         }
     }
