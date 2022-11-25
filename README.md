@@ -7,7 +7,7 @@ This app does not collect, store, or share any of your data.
 <br>
 
 <p align="center">
-    <img width="800" src="https://github.com/harr1424/LibreLightSensor/blob/main/images/light-sensor.jpeg" width=100 alt="A screenshot of the app determining brightness of the environment.">
+    <img width="300" src="https://github.com/harr1424/LibreLightSensor/blob/main/images/light-sensor.jpeg" alt="A screenshot of the app determining brightness of the environment.">
     
 </p>
 
